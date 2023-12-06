@@ -1,0 +1,6 @@
+# lockfile
+deno.lock
+
+# IDE
+.idea
+.vscode
