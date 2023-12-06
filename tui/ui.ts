@@ -21,8 +21,16 @@ export const LOGO = () => {
 export const ask = <T extends string | number | undefined>(
   str: string,
   defaultValue?: T,
-): T | undefined => {
-  return prompt(colors.yellow(str), String(defaultValue || "")) as
-    | T
-    | undefined;
+) => {
+  return prompt(colors.yellow("> ") + str + "\n", String(defaultValue || ""));
 };
+
+export const listMenu = (...items: string[]) => {
+  const decimal = items.map((str, index) =>
+    `${colors.yellow(String(index + 1))} - ${str}`
+  ).join("\n");
+  console.log(decimal);
+  br();
+};
+
+export const br = (times = 1) => console.log("\n".repeat(times));
