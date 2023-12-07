@@ -1,15 +1,13 @@
 import { Wallet } from "./core/Wallet.ts";
 import { confirmation, err, money } from "./tui/colors.ts";
-import { printHistory } from "./tui/core_printer.ts";
+import { printHistory } from "./tui/printer.ts";
+import { ask, askInt, askStr } from "./tui/ui.ts";
 import {
-  ask,
-  askInt,
-  askStr,
   LOGO,
   printNewline,
   printNumberedList,
   printObject,
-} from "./tui/ui.ts";
+} from "./tui/printer.ts";
 
 function getUserWallet() {
   const owner = askStr("Wallet owner username", "invalid username", "John Doe");
@@ -78,7 +76,7 @@ if (import.meta.main) {
         break;
       case "History":
         printNewline();
-        printHistory(wallet.actionsHistory)
+        printHistory(wallet.actionsHistory);
         break;
       case "Exit":
         {
