@@ -5,20 +5,20 @@ import { Transaction, Transactionable } from "./Transaction.ts";
 export class Wallet implements Transactionable {
   // in case you don't remember what you did:D
   public readonly actionsHistory: Action[];
-  private readonly _balance: Money;
+  readonly #balance: Money;
 
   constructor(public readonly owner: string, initialBalance = 0) {
-    this._balance = Money.from(initialBalance);
+    this.#balance = Money.from(initialBalance);
     this.actionsHistory = [];
   }
 
   deposit(amount: number): Transaction {
-    const transaction = this._balance.deposit(amount);
+    const transaction = this.#balance.deposit(amount);
     return this._queueHistory(transaction);
   }
 
   withdraw(amount: number): Transaction {
-    const transaction = this._balance.withdraw(amount);
+    const transaction = this.#balance.withdraw(amount);
     return this._queueHistory(transaction);
   }
 
@@ -28,6 +28,13 @@ export class Wallet implements Transactionable {
   }
 
   get balance() {
-    return this._balance.amount;
+    return this.#balance.amount;
+  }
+
+  toView(): Record<string, unknown> {
+    return {
+      owner: this.owner,
+      balance: this.balance,
+    };
   }
 }
