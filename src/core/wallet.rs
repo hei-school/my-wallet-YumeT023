@@ -5,17 +5,24 @@ use super::{
 };
 
 pub struct Wallet {
+    pub owner: String,
     pub action_history: Vec<Action>,
     balance: Money,
 }
 
 impl Wallet {
+    pub fn new(owner: &str) -> Wallet {
+        Self {
+            owner: owner.to_string(),
+            balance: Money::from(0),
+            action_history: vec![],
+        }
+    }
+
     pub fn balance(&self) -> u16 {
         self.balance.amount()
     }
-}
 
-impl Wallet {
     pub fn queue_history(&mut self, action: Action) -> Action {
         self.action_history.push(action.clone());
         action

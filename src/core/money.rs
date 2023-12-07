@@ -7,6 +7,10 @@ pub struct Money {
 }
 
 impl Money {
+    pub fn from(amount: u16) -> Money {
+        Self { amount }
+    }
+
     pub fn amount(&self) -> u16 {
         self.amount
     }
