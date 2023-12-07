@@ -1,49 +1,84 @@
 import { Wallet } from "./core/Wallet.ts";
-import { ask, listMenu, LOGO } from "./tui/ui.ts";
+import { confirmation, money } from "./tui/colors.ts";
+import {
+  ask,
+  askInt,
+  askStr,
+  LOGO,
+  printNewline,
+  printNumberedList,
+  printObject,
+} from "./tui/ui.ts";
 
-function initWallety() {
-  const owner = ask("Wallet owner username", "John Doe");
-  const initialBalance = ask("Initial balance", 0);
+function getUserWallet() {
+  const owner = askStr("Wallet owner username", "invalid username", "John Doe");
+  const initialBalance = askInt("Initial balance", "Invalid amount");
+  return new Wallet(owner!, Number(initialBalance));
+}
 
-  const wallet = new Wallet(owner!, Number(initialBalance));
+const MENU = [
+  "State",
+  "Deposit",
+  "Withdraw",
+  "Exit",
+];
 
-  function showStat() {
-    console.log("stat", wallet);
+function printWallet(wallet: Wallet) {
+  printNewline();
+  printObject(
+    "Wallet State",
+    wallet.toView(),
+  );
+}
+
+function exitWallety() {
+  printNewline();
+  console.log(money("Thank you for using Wallety!!!"));
+  printNewline();
+  Deno.exit(0);
+}
+
+function executeMainLoop(exec: (menu: string) => void) {
+  while (true) {
+    printNewline();
+    printNumberedList(MENU);
+    const index = +ask("Select menu", 1)!;
+    const selectedMenu = MENU[index - 1];
+    exec(selectedMenu);
   }
-
-  function startLoop() {
-    while (true) {
-      listMenu(
-        "state",
-        "deposit",
-        "withdrawal",
-        "put item in",
-        "take item out",
-      );
-      switch (ask("Select menu", 1)) {
-        case "1":
-          showStat();
-          break;
-        case "2": {
-          const amount = ask("Deposit amount", 0)!;
-          wallet.deposit(+amount);
-          break;
-        }
-        case "3": {
-          const amount = ask("withdrawal amount", 0)!;
-          wallet.withdraw(+amount);
-          break;
-        }
-        default:
-          break;
-      }
-    }
-  }
-
-  startLoop();
 }
 
 if (import.meta.main) {
   LOGO();
-  initWallety();
+  const wallet = getUserWallet();
+  executeMainLoop((menu) => {
+    switch (menu) {
+      case "State":
+        printWallet(wallet);
+        break;
+      case "Deposit":
+        {
+          const amount = askInt("[DEPOSIT] How much", "invalid amount") ?? 0;
+          wallet.deposit(amount);
+          printWallet(wallet);
+        }
+        break;
+      case "Withdraw":
+        {
+          const amount = askInt("[WITHDRAW] How much", "invalid amount") ?? 0;
+          wallet.withdraw(amount);
+          printWallet(wallet);
+        }
+        break;
+      case "Exit":
+        {
+          exitWallety();
+        }
+        break;
+      default:
+        if (confirm(confirmation("Do you want to exit"))) {
+          exitWallety();
+        }
+    }
+  });
 }
