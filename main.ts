@@ -1,5 +1,5 @@
 import { Wallet } from "./core/Wallet.ts";
-import { confirmation, money } from "./tui/colors.ts";
+import { confirmation, err, money } from "./tui/colors.ts";
 import {
   ask,
   askInt,
@@ -66,7 +66,11 @@ if (import.meta.main) {
       case "Withdraw":
         {
           const amount = askInt("[WITHDRAW] How much", "invalid amount") ?? 0;
-          wallet.withdraw(amount);
+          try {
+            wallet.withdraw(amount);
+          } catch (e) {
+            console.log(err(e.message));
+          }
           printWallet(wallet);
         }
         break;
