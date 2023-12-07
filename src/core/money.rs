@@ -29,7 +29,7 @@ impl Transactionable for Money {
                 "amount to take out must be lesser than actual",
             ));
         }
-        self.amount += amount;
+        self.amount -= amount;
         Ok(Transaction::withdraw(amount))
     }
 }
