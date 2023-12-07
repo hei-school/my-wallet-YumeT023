@@ -64,9 +64,13 @@ export const printObject = (
   header: string,
   object: Record<string, unknown>,
 ) => {
-  console.log(colors.yellow(header));
-  console.log("------------------");
+  printHeader(header);
   Object.keys(object).forEach((key) => {
     console.log(colors.yellow(key), object[key]);
   });
 };
+
+export const printHeader = (header: string) => {
+  console.log(colors.yellow(header));
+  console.log("------------------");
+}

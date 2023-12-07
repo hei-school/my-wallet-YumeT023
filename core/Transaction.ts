@@ -1,6 +1,6 @@
 export enum TransactionType {
-  DEPOSIT = 0,
-  WITHDRAWAL,
+  DEPOSIT = "DEPOSIT",
+  WITHDRAWAL = "WITHDRAWAL",
 }
 
 export class Transaction {

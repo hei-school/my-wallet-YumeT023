@@ -1,5 +1,6 @@
 import { Wallet } from "./core/Wallet.ts";
 import { confirmation, err, money } from "./tui/colors.ts";
+import { printHistory } from "./tui/core_printer.ts";
 import {
   ask,
   askInt,
@@ -20,6 +21,7 @@ const MENU = [
   "State",
   "Deposit",
   "Withdraw",
+  "History",
   "Exit",
 ];
 
@@ -73,6 +75,10 @@ if (import.meta.main) {
           }
           printWallet(wallet);
         }
+        break;
+      case "History":
+        printNewline();
+        printHistory(wallet.actionsHistory)
         break;
       case "Exit":
         {
