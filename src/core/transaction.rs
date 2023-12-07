@@ -1,6 +1,6 @@
 use std::io::Error;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub enum TransactionType {
     DEPOSIT,
     WITHDRAWAL,
