@@ -1,10 +1,12 @@
 use std::io::Error;
 
+#[derive(Clone)]
 pub enum TransactionType {
     DEPOSIT,
     WITHDRAWAL,
 }
 
+#[derive(Clone)]
 pub struct Transaction {
     pub ttype: TransactionType,
     pub amount: u16,
