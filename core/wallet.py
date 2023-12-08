@@ -15,13 +15,13 @@ class Wallet:
 
     def deposit(self, amount):
         transaction = self.balance.deposit(amount)
-        self.action_history.append(Action())
+        self.action_history.append(transaction)
         return transaction
 
     def withdraw(self, amount):
         try:
             transaction = self.balance.withdraw(amount)
-            self.queue_history(Action())
+            self.queue_history(transaction)
             return transaction
         except ValueError as e:
             # Handle insufficient funds error

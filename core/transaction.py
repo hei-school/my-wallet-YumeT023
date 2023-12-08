@@ -5,13 +5,13 @@ class TransactionType(Enum):
     WITHDRAWAL = 2
 
 class Transaction:
-    def __init__(self, ttype, amount):
-        self.ttype = ttype
+    def __init__(self, type, amount):
+        self.type = type
         self.amount = amount
 
     @classmethod
-    def new(cls, ttype, amount):
-        return cls(ttype, amount)
+    def new(cls, type, amount):
+        return cls(type, amount)
 
     @classmethod
     def deposit(cls, amount):

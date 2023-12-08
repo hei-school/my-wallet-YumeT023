@@ -10,8 +10,9 @@ def open_wallet():
 
 def start_loop(mywallet):
   while 1:
-    index = int(input("Select menu >"))
-    selected_menu = MENU[index]
+    print_list(MENU)
+    relative_index = int(input("Select menu >"))
+    selected_menu = MENU[relative_index - 1]
     if selected_menu == "Wallety state":
       print_wallet(mywallet)
     elif selected_menu  == "Deposit":
