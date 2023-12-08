@@ -1,12 +1,12 @@
-from transaction import Transaction;
+from core.transaction import Transaction 
 
 class Money:
     def __init__(self, amount):
         self.amount = amount
 
     @classmethod
-    def from_amount(cls, amount):
-        return cls(amount)
+    def from_amount(new, amount):
+        return new(amount)
 
     def get_amount(self):
         return self.amount

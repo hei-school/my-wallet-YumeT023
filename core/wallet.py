@@ -1,4 +1,4 @@
-from money import Money;
+from core.money import Money
 
 class Wallet:
     def __init__(self, owner):

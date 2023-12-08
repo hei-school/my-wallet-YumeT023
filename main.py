@@ -1,7 +1,5 @@
-import core.money;
-import core.transaction;
-import core.wallet;
-from tui.printer import *;
+from core.wallet import Wallet
+from tui.printer import *
 
 MENU = ["Wallety state", "Deposit", "Withdraw", "History", "Exit"]
 
@@ -10,25 +8,26 @@ def open_wallet():
   return Wallet(user)
 
 
-def start_loop(wallet):
-  while true:
+def start_loop(mywallet):
+  while 1:
     index = int(input("Select menu >"))
     selected_menu = MENU[index]
     if selected_menu == "Wallety state":
-      print_wallet(wallet=wallet)
+      print_wallet(mywallet)
     elif selected_menu  == "Deposit":
       amount = int(input("[DEPOSIT] amount"))
-      wallet.deposit(amount)
+      mywallet.deposit(amount)
     elif selected_menu == "Withdraw":
       amount = int(input("[WITHDRAW] amount"))
-      wallet.withdraw(amount)
+      mywallet.withdraw(amount)
     elif selected_menu == "History":
-      print_history(wallet.action_history)
+      print_history(mywallet.action_history)
     elif selected_menu == "Exit":
       print("Thank you for using Wallety")
       exit(0)
 
 def main(): 
   print_logo()
-  wallet = open_wallet()
-  start_loop(wallet)
+  start_loop(open_wallet())
+
+main();
