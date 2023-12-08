@@ -36,20 +36,21 @@ public class Printer {
   }
 
   public static void printHeader(String header) {
-    System.out.println(header);
+    System.out.printf("\n%s%n", header);
     printHr(header.length() * 2);
   }
 
   public static void printWallet(Wallet wallet) {
     printHeader("Wallet state");
-    System.out.println(format("owner   \t%s", wallet.getOwner()));
-    System.out.println(format("balance \t%s", wallet.getBalance()));
+    System.out.printf("owner   \t%s%n", wallet.getOwner());
+    System.out.printf("balance \t%f%n%n", wallet.getBalance());
   }
 
   public static void printHistory(List<Transaction> history) {
     printHeader("History");
     history.forEach(transaction -> {
-      System.out.println(format("%s\t%f", transaction.type(), transaction.amount()));
+      System.out.printf("%s\t%f%n", transaction.type(), transaction.amount());
     });
+    System.out.println();
   }
 }

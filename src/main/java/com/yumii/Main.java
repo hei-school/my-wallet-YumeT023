@@ -2,7 +2,10 @@ package com.yumii;
 
 import com.yumii.core.Wallet;
 import com.yumii.tui.Inquirer;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.Function;
 
 import static com.yumii.tui.Printer.printHistory;
@@ -13,15 +16,20 @@ import static com.yumii.tui.Printer.printWallet;
 public class Main {
   private static final Inquirer inquirer = new Inquirer();
 
-  private static final List<String> MENU = List.of(
-      "Wallety state", "Deposit", "Withdraw", "History", "Exit"
-  );
+  private static final Map<Integer, String> MENU = new TreeMap<>(Map.of(
+      1, "Wallety state",
+      2, "Deposit",
+      3, "Withdraw",
+      4, "History",
+      5, "Exit"
+  ));
 
   private static void startLoop(Function<String, Void> actionExecutor) {
     while (true) {
-      printList(MENU);
-      var menuIndex = inquirer.askInt("Select menu");
-      actionExecutor.apply(MENU.get(menuIndex - 1));
+      printList(MENU.values().stream().toList());
+      var menu = inquirer.askInt("Select menu");
+      var str = MENU.getOrDefault(menu, MENU.get(1));
+      actionExecutor.apply(str);
     }
   }
 
@@ -43,7 +51,7 @@ public class Main {
 
     startLoop(menu -> {
       switch (menu) {
-        case "State" -> printWallet(wallet);
+        case "Wallety state" -> printWallet(wallet);
         case "Deposit" -> {
           var amount = inquirer.askDouble("[DEPOSIT] How much");
           wallet.deposit(amount);
