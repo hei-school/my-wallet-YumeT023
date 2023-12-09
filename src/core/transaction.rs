@@ -9,24 +9,24 @@ pub enum TransactionType {
 #[derive(Clone)]
 pub struct Transaction {
     pub ttype: TransactionType,
-    pub amount: u16,
+    pub amount: f32,
 }
 
 impl Transaction {
-    pub fn new(ttype: TransactionType, amount: u16) -> Transaction {
+    pub fn new(ttype: TransactionType, amount: f32) -> Transaction {
         Self { ttype, amount }
     }
 
-    pub fn deposit(amount: u16) -> Transaction {
+    pub fn deposit(amount: f32) -> Transaction {
         Self::new(TransactionType::DEPOSIT, amount)
     }
 
-    pub fn withdraw(amount: u16) -> Transaction {
+    pub fn withdraw(amount: f32) -> Transaction {
         Self::new(TransactionType::WITHDRAWAL, amount)
     }
 }
 
 pub trait Transactional {
-    fn deposit(&mut self, amount: u16) -> Transaction;
-    fn withdraw(&mut self, amount: u16) -> Result<Transaction, Error>;
+    fn deposit(&mut self, amount: f32) -> Transaction;
+    fn withdraw(&mut self, amount: f32) -> Result<Transaction, Error>;
 }

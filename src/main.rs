@@ -48,14 +48,14 @@ fn main() {
             Ok(())
         }
         "Deposit" => {
-            let amount = prompt::<usize>("[WITHDRAWAL] How much");
-            wallet.deposit(amount.unwrap_or(0) as u16);
+            let amount = prompt::<f32>("[WITHDRAWAL] How much");
+            wallet.deposit(amount.unwrap_or(0.0));
             Ok(())
         }
         "Withdraw" => {
-            let amount = prompt::<usize>("[WITHDRAWAL] How much");
+            let amount = prompt::<f32>("[WITHDRAWAL] How much");
             wallet
-                .withdraw(amount.unwrap_or(0) as u16)
+                .withdraw(amount.unwrap_or(0.0))
                 .map_err(|e| e.to_string())?;
             Ok(())
         }

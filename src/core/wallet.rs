@@ -14,12 +14,12 @@ impl Wallet {
     pub fn new(owner: &str) -> Wallet {
         Self {
             owner: owner.to_string(),
-            balance: Money::from(0),
+            balance: Money::from(0.0),
             action_history: vec![],
         }
     }
 
-    pub fn balance(&self) -> u16 {
+    pub fn balance(&self) -> f32 {
         self.balance.amount()
     }
 
@@ -30,14 +30,14 @@ impl Wallet {
 }
 
 impl Transactional for Wallet {
-    fn deposit(&mut self, amount: u16) -> Transaction {
+    fn deposit(&mut self, amount: f32) -> Transaction {
         let transaction = self.balance.deposit(amount);
         self.action_history
             .push(Action::Transaction(transaction.clone()));
         transaction
     }
 
-    fn withdraw(&mut self, amount: u16) -> Result<Transaction, std::io::Error> {
+    fn withdraw(&mut self, amount: f32) -> Result<Transaction, std::io::Error> {
         let transaction = self.balance.withdraw(amount)?;
         self.queue_history(Action::Transaction(transaction.clone()));
         Ok(transaction)
