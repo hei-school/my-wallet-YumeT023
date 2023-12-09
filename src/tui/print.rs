@@ -48,6 +48,7 @@ pub fn print_wallet(w: &Wallet) {
     print_header("Wallet state");
     println!("owner   \t{}", w.owner);
     println!("balance \t{}", w.balance());
+    println!("available space \t{}", w.compute_available_space());
     print_hr(10);
 }
 
