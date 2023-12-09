@@ -2,8 +2,10 @@ use std::io::{Error, ErrorKind::InvalidData};
 
 use super::{
     action::Action,
+    card::{Card, CardPocket},
     money::Money,
-    transaction::{Transaction, Transactional}, sized::Sized, card::{Card, CardPocket},
+    sized::Sized,
+    transaction::{Transaction, Transactional},
 };
 
 pub struct Wallet {
@@ -41,7 +43,10 @@ impl Wallet {
     pub fn assert_sized_fits(&self, sized: &impl Sized) -> Result<(), Error> {
         let size = sized.compute_size();
         if self.compute_available_space() < size {
-            return Err(Error::new(InvalidData, format!("No more space for {}", size)))
+            return Err(Error::new(
+                InvalidData,
+                format!("No more space for {}", size),
+            ));
         }
         Ok(())
     }
