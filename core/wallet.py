@@ -1,21 +1,23 @@
-from core.money import Money
+from core.item.sized import Sized
+from core.item.money import Money
 
-class Wallet:
+class Wallet(Sized):
     def __init__(self, owner):
         self.owner = owner
         self.balance = Money.from_amount(0)
-        self.action_history = []
+        self.transaction_history = []
+        self.cards = []
 
     def get_balance(self):
         return self.balance.get_amount()
 
     def queue_history(self, action):
-        self.action_history.append(action)
+        self.transaction_history.append(action)
         return action
 
     def deposit(self, amount):
         transaction = self.balance.deposit(amount)
-        self.action_history.append(transaction)
+        self.transaction_history.append(transaction)
         return transaction
 
     def withdraw(self, amount):
@@ -27,3 +29,6 @@ class Wallet:
             # Handle insufficient funds error
             print(e)
             return None
+
+    def compute_size(self):
+        self.balance.compute_size() + map(lambda x: x.compute_size(), self.cards)

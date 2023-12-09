@@ -1,6 +1,9 @@
 from core.transaction import Transaction 
+from core.item.sized import Sized
 
-class Money:
+AMOUNT_UNIT_SIZE = 0.2
+
+class Money(Sized):
     def __init__(self, amount):
         self.amount = amount
 
@@ -20,3 +23,7 @@ class Money:
             raise ValueError("Amount to take out must be less than actual")
         self.amount -= amount
         return Transaction.withdraw(amount)
+
+    def compute_size(self):
+        # /!\ Floating point number
+        return self.get_amount() * AMOUNT_UNIT_SIZE

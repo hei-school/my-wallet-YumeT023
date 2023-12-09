@@ -30,5 +30,3 @@ def start_loop(mywallet):
 def main(): 
   print_logo()
   start_loop(open_wallet())
-
-main();
