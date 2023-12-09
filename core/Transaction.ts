@@ -18,7 +18,7 @@ export class Transaction {
   }
 }
 
-export interface Transactionable {
+export interface Transactional {
   deposit(amount: number): Transaction;
   withdraw(amount: number): Transaction;
 }

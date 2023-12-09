@@ -1,13 +1,8 @@
-import { Transaction, Transactionable } from "./Transaction.ts";
+import { Transaction, Transactional } from "../Transaction.ts";
+import { Sized } from "./Sized.ts";
 
-export class MoneyOperationError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "MoneyOperationError";
-  }
-}
-
-export class Money implements Transactionable {
+export class Money implements Sized, Transactional {
+  private static readonly AMOUNT_UNIT_SIZE = 0.2;
   private constructor(private _amount: number) {}
 
   static from(amount: number) {
@@ -21,9 +16,7 @@ export class Money implements Transactionable {
 
   withdraw(amount: number): Transaction {
     if (this._amount < amount) {
-      throw new MoneyOperationError(
-        "'amount' to take out must be lesser than 'actual'",
-      );
+      throw new Error("balance unsufficient for this transaction");
     }
     this._amount -= amount;
     return Transaction.withdraw(amount);
@@ -31,5 +24,9 @@ export class Money implements Transactionable {
 
   get amount() {
     return this._amount;
+  }
+
+  computeSize(): number {
+    return this._amount * Money.AMOUNT_UNIT_SIZE;
   }
 }
