@@ -1,7 +1,7 @@
 use super::{
     action::Action,
     money::Money,
-    transaction::{Transaction, Transactionable},
+    transaction::{Transaction, Transactional},
 };
 
 pub struct Wallet {
@@ -29,7 +29,7 @@ impl Wallet {
     }
 }
 
-impl Transactionable for Wallet {
+impl Transactional for Wallet {
     fn deposit(&mut self, amount: u16) -> Transaction {
         let transaction = self.balance.deposit(amount);
         self.action_history

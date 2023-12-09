@@ -1,4 +1,4 @@
-use self::core::transaction::Transactionable;
+use self::core::transaction::Transactional;
 
 use self::core::wallet::Wallet;
 

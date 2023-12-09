@@ -1,6 +1,6 @@
 use std::io::{Error, ErrorKind::Other};
 
-use super::transaction::{Transaction, Transactionable};
+use super::transaction::{Transaction, Transactional};
 
 pub struct Money {
     amount: u16,
@@ -16,7 +16,7 @@ impl Money {
     }
 }
 
-impl Transactionable for Money {
+impl Transactional for Money {
     fn deposit(&mut self, amount: u16) -> Transaction {
         self.amount += amount;
         Transaction::deposit(amount)
