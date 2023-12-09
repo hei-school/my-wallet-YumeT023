@@ -1,4 +1,4 @@
-import { Action } from "../core/Action.ts";
+import { Transaction } from "../core/Transaction.ts";
 import { colors } from "../deps.ts";
 
 export const LOGO = () => {
@@ -19,17 +19,19 @@ export const LOGO = () => {
   );
 };
 
-export const printHistory = (history: Action[]) => {
+export const printHistory = (history: Transaction[]) => {
   printHeader("History");
   console.table(history);
 };
 
 export const printNumberedList = (items: string[]) => {
-  const decimal = items.map((str, index) =>
-    `${colors.yellow(String(index + 1))} - ${str}`
-  ).join("\n");
-  console.log(decimal);
-  printNewline();
+  if (items.length) {
+    const decimal = items.map((str, index) =>
+      `${colors.yellow(String(index + 1))} - ${str}`
+    ).join("\n");
+    console.log(decimal);
+    printNewline();
+  }
 };
 
 export const printNewline = (times = 1) => console.log("\n".repeat(times));

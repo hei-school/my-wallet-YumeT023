@@ -1,4 +1,3 @@
-import { Action } from "./history/Action.ts";
 import { Card } from "./item/Card.ts";
 import { Money } from "./item/Money.ts";
 import { Sized } from "./item/Sized.ts";
@@ -6,7 +5,7 @@ import { Transaction, Transactional } from "./Transaction.ts";
 
 export class Wallet implements Transactional, Sized {
   // in case you don't remember what you did:D
-  public readonly actionsHistory: Action[];
+  public readonly actionsHistory: Transaction[];
   private static readonly WALLET_SIZE = 30;
   readonly #cards: Omit<Card, "status">[];
   readonly #balance: Money;
@@ -30,11 +29,11 @@ export class Wallet implements Transactional, Sized {
   }
 
   putCard(card: Card) {
-    this.cards.push(card);
+    this.#cards.push(card);
   }
 
   getCardByOrder(order: number) {
-    const card = this.cards.at(order);
+    const card = this.cards.at(order - 1);
     if (!card) {
       throw new Error("No item at: " + order);
     }
@@ -45,7 +44,7 @@ export class Wallet implements Transactional, Sized {
     return this.#cards.slice();
   }
 
-  private _queueHistory<T extends Action>(action: T): T {
+  private _queueHistory(action: Transaction) {
     this.actionsHistory.push(action);
     return action;
   }
@@ -63,7 +62,7 @@ export class Wallet implements Transactional, Sized {
   }
 
   private _assertItemFits(sized: Sized) {
-    const available = this.computeSize();
+    const available = this.getAvailableSpace();
     if (available < sized.computeSize()) {
       throw new Error(
         "item couldn't fit the wallet anymore, available space is: " +
@@ -83,6 +82,7 @@ export class Wallet implements Transactional, Sized {
     return {
       owner: this.owner,
       balance: this.balance,
+      availableSpace: this.getAvailableSpace(),
     };
   }
 }
