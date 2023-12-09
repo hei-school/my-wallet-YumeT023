@@ -1,4 +1,4 @@
-use crate::core::{action::Action, wallet::Wallet};
+use crate::core::{action::Action, card::Card, wallet::Wallet};
 
 use super::colors::Style;
 
@@ -31,7 +31,7 @@ pub fn print_header(str: &str) {
     print_hr(str.len() * 2);
 }
 
-pub fn print_list(items: &Vec<&str>) {
+pub fn print_list(items: &Vec<String>) {
     let mut count = 0;
     let list_decimal = items
         .iter()
@@ -60,6 +60,14 @@ pub fn print_history(action_history: &Vec<Action>) {
                 println!("{:?}\t{}", t.ttype, t.amount)
             }
         }
+    }
+    print_hr(10);
+}
+
+pub fn print_cards(cards: Vec<Card>) {
+    print_header("Card list");
+    for card in cards {
+        println!("{}", card)
     }
     print_hr(10);
 }

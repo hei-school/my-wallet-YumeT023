@@ -53,11 +53,12 @@ impl Wallet {
 }
 
 impl Transactional for Wallet {
-    fn deposit(&mut self, amount: f32) -> Transaction {
-        let transaction = self.balance.deposit(amount);
+    fn deposit(&mut self, amount: f32) -> Result<Transaction, std::io::Error> {
+        self.assert_sized_fits(&Money::from(amount))?;
+        let transaction = self.balance.deposit(amount)?;
         self.action_history
             .push(Action::Transaction(transaction.clone()));
-        transaction
+        Ok(transaction)
     }
 
     fn withdraw(&mut self, amount: f32) -> Result<Transaction, std::io::Error> {
@@ -74,7 +75,7 @@ impl CardPocket<usize> for Wallet {
         Ok(())
     }
 
-    fn get_all(&self) -> Vec<Card> {
+    fn get_all_card(&self) -> Vec<Card> {
         self.cards.clone()
     }
 

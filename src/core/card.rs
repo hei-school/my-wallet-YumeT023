@@ -17,7 +17,18 @@ pub enum Card {
 pub trait CardPocket<IDX> {
     fn get_card(&self, idx: IDX) -> Option<&Card>;
     fn put_card(&mut self, to_put: Card) -> Result<(), Error>;
-    fn get_all(&self) -> Vec<Card>;
+    fn get_all_card(&self) -> Vec<Card>;
+}
+
+impl Card {
+    pub fn new(ctype: &str, owner: String) -> Card {
+        match ctype {
+            "Bank card" => Self::Bank(Owner(owner)),
+            "National card" => Self::National(Owner(owner)),
+            "Driving license" => Self::DrivingLicense(Owner(owner)),
+            _ => panic!("Not existent ctype {}", ctype),
+        }
+    }
 }
 
 impl Display for Card {
@@ -39,4 +50,12 @@ impl Sized for Card {
     fn compute_size(&self) -> f32 {
         1.0
     }
+}
+
+pub fn get_card_types() -> Vec<String> {
+    vec![
+        String::from("Bank card"),
+        String::from("National card"),
+        String::from("Driving license"),
+    ]
 }

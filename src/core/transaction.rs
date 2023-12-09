@@ -27,6 +27,6 @@ impl Transaction {
 }
 
 pub trait Transactional {
-    fn deposit(&mut self, amount: f32) -> Transaction;
+    fn deposit(&mut self, amount: f32) -> Result<Transaction, Error>;
     fn withdraw(&mut self, amount: f32) -> Result<Transaction, Error>;
 }

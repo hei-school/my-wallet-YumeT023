@@ -22,9 +22,9 @@ impl Money {
 }
 
 impl Transactional for Money {
-    fn deposit(&mut self, amount: f32) -> Transaction {
+    fn deposit(&mut self, amount: f32) -> Result<Transaction, Error> {
         self.amount += amount;
-        Transaction::deposit(amount)
+        Ok(Transaction::deposit(amount))
     }
 
     fn withdraw(&mut self, amount: f32) -> Result<Transaction, Error> {
