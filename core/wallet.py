@@ -1,6 +1,8 @@
 from core.item.sized import Sized
 from core.item.money import Money
 
+WALLET_SIZE = 50
+
 class Wallet(Sized):
     def __init__(self, owner):
         self.owner = owner
@@ -16,7 +18,9 @@ class Wallet(Sized):
         return action
 
     def deposit(self, amount):
-        transaction = self.balance.deposit(amount)
+        money = Money.from_amount(amount)
+        self._assert_item_fits(money)
+        transaction = self.balance.deposit(money.amount)
         self.transaction_history.append(transaction)
         return transaction
 
@@ -30,5 +34,22 @@ class Wallet(Sized):
             print(e)
             return None
 
+    def add_card(self, item):
+        self._assert_item_fits(item)
+        self.cards.append(item)
+
+    def get_card(self, order):
+        card = self.cards[order - 1]
+        if card == None:
+            raise Exception("Card not found")
+
     def compute_size(self):
         self.balance.compute_size() + map(lambda x: x.compute_size(), self.cards)
+
+    def _assert_item_fits(self, item):
+        size = item.compute_size()
+        if self._get_available_space() < size:
+            raise AssertionError(f"item with size: {size} doesn't fit in the wallet anymore, available_in_wallet={self._get_available_space()}")
+
+    def _get_available_space(self):
+        WALLET_SIZE - self.compute_size()
