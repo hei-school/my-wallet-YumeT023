@@ -21,7 +21,7 @@ class Wallet(Sized):
         money = Money.from_amount(amount)
         self._assert_item_fits(money)
         transaction = self.balance.deposit(money.amount)
-        self.transaction_history.append(transaction)
+        self.queue_history(transaction)
         return transaction
 
     def withdraw(self, amount):
@@ -40,16 +40,17 @@ class Wallet(Sized):
 
     def get_card(self, order):
         card = self.cards[order - 1]
-        if card == None:
+        if card is None:
             raise Exception("Card not found")
+        return card
 
     def compute_size(self):
-        self.balance.compute_size() + map(lambda x: x.compute_size(), self.cards)
+        return self.balance.compute_size() + sum(map(lambda x: x.compute_size(), self.cards))
 
     def _assert_item_fits(self, item):
         size = item.compute_size()
         if self._get_available_space() < size:
-            raise AssertionError(f"item with size: {size} doesn't fit in the wallet anymore, available_in_wallet={self._get_available_space()}")
+            raise Exception(f"item with size: {size} doesn't fit in the wallet anymore, available_in_wallet={self._get_available_space()}")
 
     def _get_available_space(self):
-        WALLET_SIZE - self.compute_size()
+        return WALLET_SIZE - self.compute_size()
