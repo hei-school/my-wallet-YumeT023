@@ -1,5 +1,7 @@
 use std::{fmt::Display, io::Error};
 
+use crate::tui::colors::Style;
+
 use super::sized::Sized;
 
 #[derive(Clone)]
@@ -23,9 +25,11 @@ impl Display for Card {
         f.write_fmt(format_args!(
             "{}",
             match self {
-                Card::Bank(owner) => format!("{}:{}", "Bank card", owner.0),
-                Card::DrivingLicense(owner) => format!("{}:{}", "Driving license", owner.0),
-                Card::National(owner) => format!("{}:{}", "National card", owner.0),
+                Card::Bank(owner) => format!("{}:{}", String::from("Bank card").main(), owner.0),
+                Card::DrivingLicense(owner) =>
+                    format!("{}:{}", String::from("Driving license").main(), owner.0),
+                Card::National(owner) =>
+                    format!("{}:{}", String::from("National card").main(), owner.0),
             }
         ))
     }
