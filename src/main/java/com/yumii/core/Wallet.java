@@ -1,7 +1,8 @@
 package com.yumii.core;
 
-import com.yumii.core.card.Card;
-import com.yumii.core.card.CardPocket;
+import com.yumii.core.item.Card;
+import com.yumii.core.item.CardPocket;
+import com.yumii.core.item.Money;
 import com.yumii.core.sized.Sized;
 import com.yumii.core.sized.SizedContainer;
 import java.util.ArrayList;

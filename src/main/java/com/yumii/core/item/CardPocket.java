@@ -1,4 +1,4 @@
-package com.yumii.core.card;
+package com.yumii.core.item;
 
 import java.util.List;
 import java.util.Optional;

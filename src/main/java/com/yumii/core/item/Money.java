@@ -1,5 +1,7 @@
-package com.yumii.core;
+package com.yumii.core.item;
 
+import com.yumii.core.Transaction;
+import com.yumii.core.Transactional;
 import com.yumii.core.sized.Sized;
 
 public class Money implements Transactional, Sized {

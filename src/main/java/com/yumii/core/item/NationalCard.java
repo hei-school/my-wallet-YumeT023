@@ -1,6 +1,6 @@
-package com.yumii.core.card;
+package com.yumii.core.item;
 
-import static com.yumii.core.card.CardTypeEnum.NATIONAL;
+import static com.yumii.core.item.CardTypeEnum.NATIONAL;
 
 public final class NationalCard extends Card {
   public NationalCard(String owner) {

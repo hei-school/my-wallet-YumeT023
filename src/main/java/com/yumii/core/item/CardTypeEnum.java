@@ -1,4 +1,4 @@
-package com.yumii.core.card;
+package com.yumii.core.item;
 
 public enum CardTypeEnum {
   BANK,

@@ -1,4 +1,4 @@
-package com.yumii.core.card;
+package com.yumii.core.item;
 
 import com.yumii.core.sized.Sized;
 
