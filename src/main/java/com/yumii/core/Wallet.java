@@ -1,12 +1,15 @@
 package com.yumii.core;
 
 import com.yumii.core.card.Card;
+import com.yumii.core.card.CardPocket;
 import com.yumii.core.sized.Sized;
 import com.yumii.core.sized.SizedContainer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import javax.naming.SizeLimitExceededException;
 
-public class Wallet implements Transactional, SizedContainer {
+public class Wallet implements Transactional, SizedContainer, CardPocket<Integer> {
   private static final double WALLET_SIZE = 50;
   private final List<Transaction> history;
   private final List<Card> cards;
@@ -32,10 +35,6 @@ public class Wallet implements Transactional, SizedContainer {
     return this.history.stream().toList();
   }
 
-  public List<Card> getCards() {
-    return cards;
-  }
-
   private Transaction _enqueueHistory(Transaction history) {
     this.history.add(history);
     return history;
@@ -51,6 +50,12 @@ public class Wallet implements Transactional, SizedContainer {
   public Transaction withdraw(double amount) {
     var transaction = this.balance.withdraw(amount);
     return this._enqueueHistory(transaction);
+  }
+
+  private void _assertItemFits(Sized item) throws SizeLimitExceededException {
+    if (!canItemFit(item)) {
+      throw new SizeLimitExceededException("Not enough space: item.size=%s couldn't fit in wallet.available_space%s".formatted(item.computeSize(), computeAvailableSpace()));
+    }
   }
 
   @Override
@@ -69,5 +74,25 @@ public class Wallet implements Transactional, SizedContainer {
   @Override
   public boolean canItemFit(Sized item) {
     return computeAvailableSpace() >= item.computeSize();
+  }
+
+  @Override
+  public Optional<Card> getCard(Integer id) {
+    return Optional.of(cards.get(id - 1 /* convert to list indexing */));
+  }
+
+  @Override
+  public List<Card> getCards() {
+    return cards;
+  }
+
+  @Override
+  public void putCard(Card toPut) {
+    try {
+      _assertItemFits(toPut);
+      cards.add(toPut);
+    } catch (SizeLimitExceededException e) {
+      System.out.println(e.getMessage());
+    }
   }
 }
