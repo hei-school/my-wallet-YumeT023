@@ -13,8 +13,13 @@ public sealed class Card implements Sized permits BankCard, DrivingLicenseCard, 
   }
 
   @Override
+  public String toString() {
+    return "%s: %s".formatted(type, owner);
+  }
+
+  @Override
   public double computeSize() {
-    return 1;
+    return CARD_SIZE;
   }
 
   public CardTypeEnum getType() {

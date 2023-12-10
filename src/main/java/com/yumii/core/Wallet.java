@@ -43,8 +43,15 @@ public class Wallet implements Transactional, SizedContainer, CardPocket<Integer
 
   @Override
   public Transaction deposit(double amount) {
-    var transaction = this.balance.deposit(amount);
-    return this._enqueueHistory(transaction);
+    try {
+      var money = Money.from(amount);
+      _assertItemFits(money);
+      var transaction = this.balance.deposit(amount);
+      return this._enqueueHistory(transaction);
+    } catch (SizeLimitExceededException e) {
+      System.out.println(e.getMessage());
+    }
+    return null;
   }
 
   @Override
@@ -79,7 +86,12 @@ public class Wallet implements Transactional, SizedContainer, CardPocket<Integer
 
   @Override
   public Optional<Card> getCard(Integer id) {
-    return Optional.of(cards.get(id - 1 /* convert to list indexing */));
+    try {
+      return Optional.of(cards.get(id - 1 /* convert to list indexing */));
+    } catch (IndexOutOfBoundsException e) {
+      System.out.println("Non existent card");
+    }
+    return Optional.empty();
   }
 
   @Override
