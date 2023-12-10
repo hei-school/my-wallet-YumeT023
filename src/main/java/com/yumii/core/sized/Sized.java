@@ -1,4 +1,4 @@
-package com.yumii.core;
+package com.yumii.core.sized;
 
 public interface Sized {
   double computeSize();

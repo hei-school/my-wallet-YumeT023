@@ -1,6 +1,6 @@
 package com.yumii.core.card;
 
-import com.yumii.core.Sized;
+import com.yumii.core.sized.Sized;
 
 public sealed class Card implements Sized permits BankCard, DrivingLicenseCard, NationalCard {
   protected static final double CARD_SIZE = 1;

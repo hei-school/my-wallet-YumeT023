@@ -1,6 +1,7 @@
 package com.yumii;
 
 import com.yumii.core.Wallet;
+import com.yumii.core.card.BankCard;
 import com.yumii.tui.Inquirer;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +26,7 @@ public class Main {
   ));
 
   private static void startLoop(Function<String, Void> actionExecutor) {
+    var bc = new BankCard("here is the owner");
     while (true) {
       printList(MENU.values().stream().toList());
       var menu = inquirer.askInt("Select menu");

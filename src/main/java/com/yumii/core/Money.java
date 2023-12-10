@@ -1,5 +1,7 @@
 package com.yumii.core;
 
+import com.yumii.core.sized.Sized;
+
 public class Money implements Transactional, Sized {
   private static final double AMOUNT_UNIT_SIZE = 0.2;
   private double _amount;
