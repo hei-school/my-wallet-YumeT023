@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Wallet implements Transactional {
-  private List<Transaction> history;
+  private final List<Transaction> history;
   private final String owner;
   private final Money balance;
 
