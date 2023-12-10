@@ -11,3 +11,11 @@ A Wallet Simulator program that allows you to perform almost any actions you wou
 
 ### Features
 
+![wallety](./assets/wallety.png)
+
+- Check your wallet state (funds, available space)
+- Make deposit
+- Make withdrawal
+- List actions history (you may not be able to do this in reality:D)
+- Add different type of card such as: _Bank card, National ID card, Driving license_
+- Get the specified card
